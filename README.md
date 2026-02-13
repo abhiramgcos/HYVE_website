@@ -1,2 +1,2 @@
 # HYVE_website
-# HYVE_website
+website for the 2026 collage techfest event HYVE
