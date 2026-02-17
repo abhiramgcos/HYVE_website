@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>HYVE TechFest 2026</title>
+    <link rel="icon" type="image/svg+xml" href="hyve.svg">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -383,10 +384,25 @@
 
         /* Header Safe Area Fix */
         header {
-            padding-top: max(2rem, env(safe-area-inset-top));
-            /* Fallback to 2rem/32px if env is 0 */
+            padding-top: env(safe-area-inset-top, 0px);
             height: auto;
-            min-height: calc(4rem + env(safe-area-inset-top));
+            min-height: 4rem;
+        }
+
+        /* Event card hover expand */
+        .event-card { cursor: pointer; align-self: start; }
+        .event-card .event-desc {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.35s ease, opacity 0.25s ease, margin 0.3s ease;
+            margin-top: 0;
+        }
+        .event-card:hover .event-desc,
+        .event-card.expanded .event-desc {
+            max-height: 200px;
+            opacity: 1;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -468,7 +484,7 @@
 
                 <p class="text-slate-400 text-sm md:text-lg mb-8 leading-relaxed max-w-2xl mx-auto">
                     The future of technology converges here. Join students from all colleges for 2 days of innovation,
-                    competitions, and pure adrenaline. 21 events. 7 time buckets. Infinite possibilities.
+                    competitions, and pure adrenaline. 31 events. Workshops, expos, esports & more.
                 </p>
 
                 <!-- Countdown Cards -->
@@ -558,11 +574,11 @@
                     </div>
                     <div class="flex items-center gap-3 flex-1">
                         <div class="p-2 bg-purple-900/30 rounded-lg text-purple-400"><i data-lucide="layers" class="w-5 h-5"></i></div>
-                        <div><p class="text-white font-bold text-sm">7 Time Buckets</p><p class="text-slate-500 text-xs">3 parallel events each</p></div>
+                        <div><p class="text-white font-bold text-sm">31 Events</p><p class="text-slate-500 text-xs">Competitions, Expos & more</p></div>
                     </div>
                     <div class="flex items-center gap-3 flex-1">
                         <div class="p-2 bg-pink-900/30 rounded-lg text-pink-400"><i data-lucide="trophy" class="w-5 h-5"></i></div>
-                        <div><p class="text-white font-bold text-sm">21 Competitions</p><p class="text-slate-500 text-xs">Solo & team formats</p></div>
+                        <div><p class="text-white font-bold text-sm">3 Workshops</p><p class="text-slate-500 text-xs">MuLearn, CNC & IEEE</p></div>
                     </div>
                     <button onclick="goToRegistration()" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-6 rounded-lg transition-colors text-sm whitespace-nowrap">Register Now</button>
                 </div>
@@ -796,179 +812,461 @@
         <!-- PAGE 3: SCHEDULE -->
         <main id="schedule-page" class="page-content px-4">
             <div class="max-w-5xl mx-auto">
-                <h2 class="text-3xl font-bold font-orbitron text-white mb-2 md:text-center">Competition Buckets</h2>
-                <p class="text-slate-400 mb-6 md:text-center max-w-2xl mx-auto">All events are organized into 7 time buckets with 3 parallel events each. You can participate in only one event per bucket.</p>
+                <h2 class="text-3xl font-bold font-orbitron text-white mb-2 md:text-center">Full Schedule</h2>
+                <p class="text-slate-400 mb-2 md:text-center max-w-2xl mx-auto">Complete event timeline across both days — competitions, workshops, expos, and more. Plan your HYVE experience.</p>
+             
 
-                <!-- How it Works -->
-                <div class="bg-black/40 rounded-xl border border-cyan-500/20 p-5 mb-8 max-w-2xl mx-auto">
-                    <h4 class="text-cyan-400 font-bold text-sm font-orbitron mb-3 flex items-center gap-2"><i data-lucide="info" class="w-4 h-4"></i> How Buckets Work</h4>
-                    <ul class="text-slate-400 text-sm space-y-2">
-                        <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">&#9654;</span> Events in the same bucket run at the same time</li>
-                        <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">&#9654;</span> You cannot register for two events within the same bucket</li>
-                        <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">&#9654;</span> You can register for multiple events across different buckets</li>
-                    </ul>
+                <!-- Legend -->
+                <div class="flex flex-wrap gap-3 justify-center mb-8">
+                    <span class="flex items-center gap-1.5 text-xs"><span class="w-2.5 h-2.5 rounded-full bg-cyan-400 inline-block"></span><span class="text-slate-400">Game / Competition</span></span>
+                    <span class="flex items-center gap-1.5 text-xs"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block"></span><span class="text-slate-400">General</span></span>
+                    <span class="flex items-center gap-1.5 text-xs"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block"></span><span class="text-slate-400">Workshop</span></span>
+                    <span class="flex items-center gap-1.5 text-xs"><span class="w-2.5 h-2.5 rounded-full bg-pink-400 inline-block"></span><span class="text-slate-400">Esports</span></span>
                 </div>
 
-                <!-- DAY 1 -->
-                <h3 class="text-cyan-400 font-bold text-xl font-orbitron mb-4 flex items-center gap-2"><i data-lucide="calendar" class="w-5 h-5"></i> DAY 1 — February 18</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+                <!-- ═══════════ DAY 1 — February 18 ═══════════ -->
+                <h3 class="text-cyan-400 font-bold text-xl font-orbitron mb-5 flex items-center gap-2"><i data-lucide="calendar" class="w-5 h-5"></i> DAY 1 — February 18</h3>
 
-                    <!-- Bucket 1 -->
-                    <div class="bg-black/40 rounded-xl border border-white/10 p-5 hover:border-cyan-500/30 transition-all">
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="bg-cyan-500/20 text-cyan-300 text-xs font-bold px-3 py-1 rounded-full font-orbitron">BUCKET 1</span>
-                            <span class="text-xs text-slate-400 font-mono">10:00 AM – 11:00 AM</span>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="image" class="w-5 h-5 mx-auto mb-1 text-cyan-400"></i>
-                                <p class="text-white text-xs font-medium">Image Prompting</p>
-                            </div>
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="eye-off" class="w-5 h-5 mx-auto mb-1 text-pink-400"></i>
-                                <p class="text-white text-xs font-medium">Blind Fold Challenge</p>
-                            </div>
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="zap" class="w-5 h-5 mx-auto mb-1 text-amber-400"></i>
-                                <p class="text-white text-xs font-medium">Power Quest</p>
-                            </div>
-                        </div>
+                <!-- 9:30 AM – 10:00 AM -->
+                <div class="mb-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-xs text-cyan-300 font-mono font-bold bg-cyan-500/15 px-3 py-1 rounded-full">9:30 AM – 10:00 AM</span>
                     </div>
-
-                    <!-- Bucket 2 -->
-                    <div class="bg-black/40 rounded-xl border border-white/10 p-5 hover:border-cyan-500/30 transition-all">
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="bg-cyan-500/20 text-cyan-300 text-xs font-bold px-3 py-1 rounded-full font-orbitron">BUCKET 2</span>
-                            <span class="text-xs text-slate-400 font-mono">11:00 AM – 12:00 PM</span>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="code" class="w-5 h-5 mx-auto mb-1 text-cyan-400"></i>
-                                <p class="text-white text-xs font-medium">Blind Coding</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div class="event-card bg-black/40 rounded-xl border border-emerald-500/20 p-4 hover:border-emerald-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-emerald-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-emerald-400"><i data-lucide="sparkles" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Inauguration</h4>
+                                    <p class="text-[11px] text-slate-500">General • Dome</p>
+                                </div>
                             </div>
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="unlock" class="w-5 h-5 mx-auto mb-1 text-cyan-400"></i>
-                                <p class="text-white text-xs font-medium">Jail Breaking</p>
-                            </div>
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="pen-tool" class="w-5 h-5 mx-auto mb-1 text-pink-400"></i>
-                                <p class="text-white text-xs font-medium">CAD Quest</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Bucket 3 -->
-                    <div class="bg-black/40 rounded-xl border border-white/10 p-5 hover:border-cyan-500/30 transition-all">
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="bg-cyan-500/20 text-cyan-300 text-xs font-bold px-3 py-1 rounded-full font-orbitron">BUCKET 3</span>
-                            <span class="text-xs text-slate-400 font-mono">1:00 PM – 4:00 PM</span>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="bot" class="w-5 h-5 mx-auto mb-1 text-amber-400"></i>
-                                <p class="text-white text-xs font-medium">Line Following Robot</p>
-                            </div>
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="building-2" class="w-5 h-5 mx-auto mb-1 text-pink-400"></i>
-                                <p class="text-white text-xs font-medium">Tower Construction</p>
-                            </div>
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="shield" class="w-5 h-5 mx-auto mb-1 text-cyan-400"></i>
-                                <p class="text-white text-xs font-medium">CTF</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Bucket 4 -->
-                    <div class="bg-black/40 rounded-xl border border-white/10 p-5 hover:border-cyan-500/30 transition-all">
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="bg-cyan-500/20 text-cyan-300 text-xs font-bold px-3 py-1 rounded-full font-orbitron">BUCKET 4</span>
-                            <span class="text-xs text-slate-400 font-mono">4:00 PM – 5:30 PM</span>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="cpu" class="w-5 h-5 mx-auto mb-1 text-amber-400"></i>
-                                <p class="text-white text-xs font-medium">Circuit Debugging</p>
-                            </div>
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="message-square" class="w-5 h-5 mx-auto mb-1 text-cyan-400"></i>
-                                <p class="text-white text-xs font-medium">Rapid AI Chatbot</p>
-                            </div>
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="ruler" class="w-5 h-5 mx-auto mb-1 text-pink-400"></i>
-                                <p class="text-white text-xs font-medium">Area Calculation</p>
-                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Official opening ceremony of HYVE 2026 — the inaugural season of the flagship technology festival at Providence College of Engineering.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- DAY 2 -->
-                <h3 class="text-purple-400 font-bold text-xl font-orbitron mb-4 flex items-center gap-2"><i data-lucide="calendar" class="w-5 h-5"></i> DAY 2 — February 19</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
-
-                    <!-- Bucket 5 -->
-                    <div class="bg-black/40 rounded-xl border border-white/10 p-5 hover:border-purple-500/30 transition-all">
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="bg-purple-500/20 text-purple-300 text-xs font-bold px-3 py-1 rounded-full font-orbitron">BUCKET 5</span>
-                            <span class="text-xs text-slate-400 font-mono">9:30 AM – 11:00 AM</span>
+                <!-- 10:00 AM – 11:00 AM -->
+                <div class="mb-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-xs text-cyan-300 font-mono font-bold bg-cyan-500/15 px-3 py-1 rounded-full">10:00 AM – 11:00 AM</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="image" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Image Prompting</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Room 6108</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Replicate a reference image using precise AI prompts. Focus on lighting, composition, texture, color, and style. <span class="text-cyan-400">₹1,500 Prize Pool</span> · <span class="text-slate-500">₹20 Entry</span></p>
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="flame" class="w-5 h-5 mx-auto mb-1 text-amber-400"></i>
-                                <p class="text-white text-xs font-medium">Precision Soldering</p>
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="eye-off" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Blind Fold Challenge</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Room 2101</p>
+                                </div>
                             </div>
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="lightbulb" class="w-5 h-5 mx-auto mb-1 text-cyan-400"></i>
-                                <p class="text-white text-xs font-medium">Ideathon</p>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Integrate three unknown electronic components into a kit. Creativity and technical adaptability are tested. <span class="text-cyan-400">₹1,500 Prize Pool</span> · <span class="text-slate-500">₹50 Entry</span></p>
+                        </div>
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="zap" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Power Quest</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Room 2103</p>
+                                </div>
                             </div>
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="activity" class="w-5 h-5 mx-auto mb-1 text-cyan-400"></i>
-                                <p class="text-white text-xs font-medium">MATLAB / Simulink</p>
-                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Collect hidden components across campus and build a working circuit. Coordination and speed are key. <span class="text-cyan-400">₹1,750 Prize Pool</span> · <span class="text-slate-500">₹50 Entry</span></p>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Bucket 6 -->
-                    <div class="bg-black/40 rounded-xl border border-white/10 p-5 hover:border-purple-500/30 transition-all">
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="bg-purple-500/20 text-purple-300 text-xs font-bold px-3 py-1 rounded-full font-orbitron">BUCKET 6</span>
-                            <span class="text-xs text-slate-400 font-mono">11:00 AM – 12:00 PM</span>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="unplug" class="w-5 h-5 mx-auto mb-1 text-amber-400"></i>
-                                <p class="text-white text-xs font-medium">Unwire To Win</p>
+                <!-- 10:00 AM – 12:00 PM (Workshop) -->
+                <div class="mb-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-xs text-amber-300 font-mono font-bold bg-amber-500/15 px-3 py-1 rounded-full">10:00 AM – 12:00 PM</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div class="event-card bg-black/40 rounded-xl border border-amber-500/20 p-4 hover:border-amber-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-amber-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-amber-400"><i data-lucide="graduation-cap" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">MuLearn Workshop</h4>
+                                    <p class="text-[11px] text-slate-500">Workshop • MBA Seminar Hall</p>
+                                </div>
                             </div>
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="gamepad-2" class="w-5 h-5 mx-auto mb-1 text-amber-400"></i>
-                                <p class="text-white text-xs font-medium">Volt Edge – Game Zone</p>
-                            </div>
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="shuffle" class="w-5 h-5 mx-auto mb-1 text-pink-400"></i>
-                                <p class="text-white text-xs font-medium">MixMaster Challenge</p>
-                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Velocity 2.0 — A hands-on game development workshop focused on building interactive experiences using Unity. Explore core design principles, game mechanics, and real-time development. Organized by Mulearn PRC.</p>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Bucket 7 -->
-                    <div class="bg-black/40 rounded-xl border border-white/10 p-5 hover:border-purple-500/30 transition-all md:col-span-2">
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="bg-purple-500/20 text-purple-300 text-xs font-bold px-3 py-1 rounded-full font-orbitron">BUCKET 7</span>
-                            <span class="text-xs text-slate-400 font-mono">1:00 PM – 4:00 PM</span>
+                <!-- 10:00 AM – 5:00 PM (All-day General) -->
+                <div class="mb-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-xs text-emerald-300 font-mono font-bold bg-emerald-500/15 px-3 py-1 rounded-full">10:00 AM – 5:00 PM</span>
+                        <span class="text-[10px] text-slate-500 uppercase tracking-wider">All Day</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div class="event-card bg-black/40 rounded-xl border border-emerald-500/20 p-4 hover:border-emerald-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-emerald-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-emerald-400"><i data-lucide="battery-charging" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">EV Expo</h4>
+                                    <p class="text-[11px] text-slate-500">General • Dome</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Showcases sustainable mobility through cutting-edge electric vehicles and next-generation automotive technologies, highlighting innovation in design, efficiency, and intelligent systems.</p>
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="pencil-ruler" class="w-5 h-5 mx-auto mb-1 text-pink-400"></i>
-                                <p class="text-white text-xs font-medium">CAD Clash</p>
+                        <div class="event-card bg-black/40 rounded-xl border border-emerald-500/20 p-4 hover:border-emerald-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-emerald-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-emerald-400"><i data-lucide="car" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">RC Car Show</h4>
+                                    <p class="text-[11px] text-slate-500">General • Bus Parking</p>
+                                </div>
                             </div>
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="audio-lines" class="w-5 h-5 mx-auto mb-1 text-pink-400"></i>
-                                <p class="text-white text-xs font-medium">Sonic Maze</p>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Powered by Torque7Racing — showcases high-speed, precision-engineered RC machines, highlighting the thrill of scale motorsport and technical performance.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 11:00 AM – 12:00 PM -->
+                <div class="mb-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-xs text-cyan-300 font-mono font-bold bg-cyan-500/15 px-3 py-1 rounded-full">11:00 AM – 12:00 PM</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="code" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Blind Coding</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Room 3003</p>
+                                </div>
                             </div>
-                            <div class="bg-black/30 rounded-lg p-3 text-center">
-                                <i data-lucide="map" class="w-5 h-5 mx-auto mb-1 text-pink-400"></i>
-                                <p class="text-white text-xs font-medium">Treasure Hunt</p>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Code without visual feedback using logic and memory. Accuracy and syntax matter most. <span class="text-cyan-400">₹1,500 Prize Pool</span> · <span class="text-slate-500">₹20 Entry</span></p>
+                        </div>
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="unlock" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Jail Breaking</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Room 6108</p>
+                                </div>
                             </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Bypass safeguards of a restricted AI model using creative prompts. Extract a hidden "secret" without triggering refusal mechanisms. <span class="text-cyan-400">₹1,750 Prize Pool</span> · <span class="text-slate-500">₹50 Entry</span></p>
+                        </div>
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="pen-tool" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">CAD Quest</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Room 3001</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">A fast-paced mechanical design competition — create precise CAD models from a live technical brief. Tests speed, accuracy, and design skills under pressure. <span class="text-cyan-400">₹1,500 Prize Pool</span> · <span class="text-slate-500">₹50 Entry</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1:00 PM – 4:00 PM -->
+                <div class="mb-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-xs text-cyan-300 font-mono font-bold bg-cyan-500/15 px-3 py-1 rounded-full">1:00 PM – 4:00 PM</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div class="event-card bg-black/40 rounded-xl border border-amber-500/20 p-4 hover:border-amber-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-amber-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-amber-400"><i data-lucide="wrench" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">CNC Hands-on Workshop</h4>
+                                    <p class="text-[11px] text-slate-500">Workshop • Mech Fluid Lab</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">A practical workshop introducing the fundamentals of CNC machining and digital manufacturing through guided hands-on experience. Explore machine operations, precision techniques, and real-world applications.</p>
+                        </div>
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="bot" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Line Following Robot</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Room 6206</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Assemble a disassembled robot kit and program it to follow a track. Integrate sensors and motors for accurate line detection. Precision, stability, and smooth navigation are key. <span class="text-cyan-400">₹3,500 Prize Pool</span> · <span class="text-slate-500">₹200 Entry</span></p>
+                        </div>
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="building-2" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Tower Construction</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Room 2002</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Build a model bridge with specified materials. Focus on stability and load efficiency. <span class="text-cyan-400">₹1,750 Prize Pool</span> · <span class="text-slate-500">₹50 Entry</span></p>
+                        </div>
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="shield" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">CTF</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Room 3002</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Find and exploit vulnerabilities in code, software, or systems. Retrieve hidden "flags" to prove successful breaches. Speed, logic, and cybersecurity skills matter most. <span class="text-cyan-400">₹1,750 Prize Pool</span> · <span class="text-slate-500">₹50 Entry</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4:00 PM – 5:30 PM -->
+                <div class="mb-10">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-xs text-cyan-300 font-mono font-bold bg-cyan-500/15 px-3 py-1 rounded-full">4:00 PM – 5:30 PM</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="cpu" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Circuit Debugging</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Room 2101</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Identify and fix faults in a pre-installed electronic circuit. Logical troubleshooting and restoration are required. <span class="text-cyan-400">₹1,500 Prize Pool</span> · <span class="text-slate-500">₹50 Entry</span></p>
+                        </div>
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="message-square" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Rapid AI Chatbot</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Room 6206</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Build a fully functional AI chatbot using no-code tools. Design conversational flows and system prompts for accuracy and responsiveness. <span class="text-cyan-400">₹1,750 Prize Pool</span> · <span class="text-slate-500">₹100 Entry</span></p>
+                        </div>
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="ruler" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Area Calculation</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Civil Lab</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Measure and compute the area of a site using surveying tools. Accurate data recording is essential. <span class="text-cyan-400">₹1,750 Prize Pool</span> · <span class="text-slate-500">₹100 Entry</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div class="border-t border-white/5 mb-10"></div>
+
+                <!-- ═══════════ DAY 2 — February 19 ═══════════ -->
+                <h3 class="text-purple-400 font-bold text-xl font-orbitron mb-5 flex items-center gap-2"><i data-lucide="calendar" class="w-5 h-5"></i> DAY 2 — February 19</h3>
+
+                <!-- 9:30 AM – 11:00 AM -->
+                <div class="mb-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-xs text-purple-300 font-mono font-bold bg-purple-500/15 px-3 py-1 rounded-full">9:30 AM – 11:00 AM</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="flame" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Precision Soldering</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Room 6207</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Assemble and solder a PCB accurately. Component placement, neatness, and thermal control are critical. <span class="text-cyan-400">₹1,500 Prize Pool</span> · <span class="text-slate-500">₹50 Entry</span></p>
+                        </div>
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="lightbulb" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Ideathon</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Main Seminar Hall</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Develop a technology-driven solution for a real-world problem. Define functionality, required tech, and audience impact. <span class="text-cyan-400">₹3,500 Prize Pool</span> · <span class="text-slate-500">₹100 Entry</span></p>
+                        </div>
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="activity" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">MATLAB / Simulink Debugging</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Room 3003</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Fix errors in MATLAB/Simulink power system models. Accuracy and logical problem-solving are essential. <span class="text-cyan-400">₹3,500 Prize Pool</span> · <span class="text-slate-500">₹100 Entry</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9:30 AM – 12:00 PM -->
+                <div class="mb-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-xs text-purple-300 font-mono font-bold bg-purple-500/15 px-3 py-1 rounded-full">9:30 AM – 12:00 PM</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div class="event-card bg-black/40 rounded-xl border border-amber-500/20 p-4 hover:border-amber-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-amber-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-amber-400"><i data-lucide="radio" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">IEEE Workshop</h4>
+                                    <p class="text-[11px] text-slate-500">Workshop • MBA Seminar Hall</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Trust the Processor — A focused workshop introducing IoT fundamentals and ESP32 architecture through a hands-on mini project. Explore connected systems and real-world embedded applications. Organized by IEEE PRC.</p>
+                        </div>
+                        <div class="event-card bg-black/40 rounded-xl border border-pink-500/20 p-4 hover:border-pink-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-pink-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-pink-400"><i data-lucide="gamepad-2" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Esports (PES) Final</h4>
+                                    <p class="text-[11px] text-slate-500">Esports • Room 6110</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">The eFootball Tournament delivers a competitive virtual football experience focused on strategy, control, and quick decision-making. Players must demonstrate skill and composure to dominate on the digital pitch.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9:30 AM – 4:00 PM (All-day) -->
+                <div class="mb-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-xs text-emerald-300 font-mono font-bold bg-emerald-500/15 px-3 py-1 rounded-full">9:30 AM – 4:00 PM</span>
+                        <span class="text-[10px] text-slate-500 uppercase tracking-wider">All Day</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div class="event-card bg-black/40 rounded-xl border border-emerald-500/20 p-4 hover:border-emerald-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-emerald-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-emerald-400"><i data-lucide="presentation" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Student Project Expo</h4>
+                                    <p class="text-[11px] text-slate-500">General • Room 6002-A</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Students showcase their innovative projects and engineering solutions in an open-floor exhibition format, demonstrating real-world problem-solving and technical creativity.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 11:00 AM – 12:00 PM -->
+                <div class="mb-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-xs text-purple-300 font-mono font-bold bg-purple-500/15 px-3 py-1 rounded-full">11:00 AM – 12:00 PM</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="unplug" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Unwire To Win</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Room 2103</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Remove redundant wires from a circuit without disrupting functionality. Precision and steady execution are needed. <span class="text-cyan-400">₹1,500 Prize Pool</span> · <span class="text-slate-500">₹50 Entry</span></p>
+                        </div>
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="gamepad" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Volt Edge – Game Zone</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Room 2002</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Complete fast-paced, circuit-based technical challenges. Speed, precision, and reflexes are tested. <span class="text-cyan-400">₹1,750 Prize Pool</span> · <span class="text-slate-500">₹50 Entry</span></p>
+                        </div>
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="shuffle" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">MixMaster Challenge</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Civil Lab</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Design, cast, and cure concrete cubes. Compressive strength and adherence to standards matter. <span class="text-cyan-400">₹1,750 Prize Pool</span> · <span class="text-slate-500">₹100 Entry</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 11:00 AM – 4:00 PM -->
+                <div class="mb-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-xs text-emerald-300 font-mono font-bold bg-emerald-500/15 px-3 py-1 rounded-full">11:00 AM – 4:00 PM</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div class="event-card bg-black/40 rounded-xl border border-emerald-500/20 p-4 hover:border-emerald-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-emerald-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-emerald-400"><i data-lucide="bot" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Robotic Expo</h4>
+                                    <p class="text-[11px] text-slate-500">General • Room 6109</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Showcases advanced robotic systems and automation technologies transforming industries through real-world engineering innovation.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1:00 PM – 4:00 PM -->
+                <div class="mb-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-xs text-purple-300 font-mono font-bold bg-purple-500/15 px-3 py-1 rounded-full">1:00 PM – 4:00 PM</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="pencil-ruler" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">CAD Clash</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Room 3001</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Create complete CAD drawings for a residential building. Precision, layout efficiency, and design clarity are key. <span class="text-cyan-400">₹1,500 Prize Pool</span> · <span class="text-slate-500">₹50 Entry</span></p>
+                        </div>
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="audio-lines" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Sonic Maze</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Room 6210</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Navigate a blindfolded maze using a custom ultrasonic sensor and buzzer. Interpret sound feedback to detect walls. Spatial reasoning and careful navigation are critical. <span class="text-cyan-400">₹1,500 Prize Pool</span> · <span class="text-slate-500">₹50 Entry</span></p>
+                        </div>
+                        <div class="event-card bg-black/40 rounded-xl border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-cyan-400"><i data-lucide="map" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Treasure Hunt</h4>
+                                    <p class="text-[11px] text-slate-500">Competition • Outdoor</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Explore the campus to find and scan hidden QR codes via a web app. Track all checkpoints efficiently. Speed, planning, and coordination determine success. <span class="text-cyan-400">₹1,750 Prize Pool</span> · <span class="text-slate-500">₹100 Entry</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4:00 PM -->
+                <div class="mb-10">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-xs text-emerald-300 font-mono font-bold bg-emerald-500/15 px-3 py-1 rounded-full">4:00 PM</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div class="event-card bg-black/40 rounded-xl border border-emerald-500/20 p-4 hover:border-emerald-500/40 transition-all" onclick="this.classList.toggle('expanded')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-emerald-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-emerald-400"><i data-lucide="trophy" class="w-5 h-5"></i></div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-white text-sm">Closing Ceremony</h4>
+                                    <p class="text-[11px] text-slate-500">General • Dome</p>
+                                </div>
+                            </div>
+                            <p class="event-desc text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-2">Prize distribution, winner announcements, and the official closing of HYVE Season 1. Celebrate two days of innovation, competition, and engineering excellence.</p>
                         </div>
                     </div>
                 </div>
