@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>HYVE TechFest 2026</title>
+    <link rel="icon" type="image/svg+xml" href="hyve.svg">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -383,10 +384,9 @@
 
         /* Header Safe Area Fix */
         header {
-            padding-top: max(2rem, env(safe-area-inset-top));
-            /* Fallback to 2rem/32px if env is 0 */
+            padding-top: env(safe-area-inset-top, 0px);
             height: auto;
-            min-height: calc(4rem + env(safe-area-inset-top));
+            min-height: 4rem;
         }
     </style>
 </head>
